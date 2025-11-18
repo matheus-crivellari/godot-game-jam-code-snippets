@@ -46,13 +46,11 @@ func cancel_jump() -> void:
 
 
 func start_coyote() -> void:
-  print('start')
   _coyote = true
   get_tree().create_timer(coyote_frames / FIXED_FRAME_RATE).timeout.connect(end_coyote)
   
 
 func end_coyote() -> void:
-  print('end')
   _coyote = false
 
 
@@ -65,6 +63,10 @@ func end_jump_buffer() -> void:
   _is_jump_buffered = false
 
 
+func flip_sprite(should_flip: bool = false) -> void:
+  animated_sprite.flip_h = should_flip
+
+
 func _physics_process(delta) -> void:
   # if not on floor adds the gravity
   if not is_on_floor():
@@ -73,7 +75,6 @@ func _physics_process(delta) -> void:
   elif _is_jump_buffered:
     jump()
     end_jump_buffer()
-
 
   var can_jump = is_on_floor() or _coyote
 
@@ -89,14 +90,13 @@ func _physics_process(delta) -> void:
       start_jump_buffer()
 
   # Get the input direction and handle the movement/deceleration.
-  # As good practice, you should replace UI actions with custom gameplay actions.
   var direction = Input.get_axis("left", "right")
-  
+
   if direction:
     if direction > 0.0:
-      animated_sprite.flip_h = true
+      flip_sprite(true)
     elif direction < 0.0:
-      animated_sprite.flip_h = false
+      flip_sprite(false)
       
     animated_sprite.animation = "walk"
     velocity.x = direction * speed
@@ -105,10 +105,10 @@ func _physics_process(delta) -> void:
     velocity.x = move_toward(velocity.x, 0, speed)
 
   move_and_slide()
-  
+
   if is_on_floor() and _is_jumping:
     _is_jumping = false
-  
+
   if not is_on_floor() and _last_floor and not _is_jumping:
     start_coyote()
 
