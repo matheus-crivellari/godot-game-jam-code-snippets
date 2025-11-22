@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://ss4pdrsohf5y"]
+
+[ext_resource type="PackedScene" uid="uid://b00s0203mbdnd" path="res://prefabs/character_sidescroller_2d_sonic_like.tscn" id="1_0m7e5"]
+[ext_resource type="Texture2D" uid="uid://bdbhe4ybdidad" path="res://textures/Sega Genesis - Sonic the Hedgehog 2 - Stages - Emerald Hill Zone Act 1.png" id="2_0m7e5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0m7e5"]
+size = Vector2(54, 1072)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vrxgl"]
+size = Vector2(3049, 78)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5pain"]
+size = Vector2(64, 219)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bb3rx"]
+size = Vector2(64, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu3mw"]
+size = Vector2(64, 61)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1puxt"]
+size = Vector2(64, 61)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tgo6"]
+size = Vector2(64, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rlquc"]
+size = Vector2(64, 160)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterSidescroller2D" parent="." instance=ExtResource("1_0m7e5")]
+position = Vector2(2111, 112)
+slide_on_ceiling = false
+floor_stop_on_slope = false
+floor_block_on_wall = false
+platform_on_leave = 2
+platform_floor_layers = 4294967293
+speed = 250.0
+jump_velocity = -350.0
+
+[node name="Camera2D" type="Camera2D" parent="CharacterSidescroller2D"]
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(-26, 225)
+shape = SubResource("RectangleShape2D_0m7e5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(2970, 188)
+shape = SubResource("RectangleShape2D_0m7e5")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(1523.5, 621)
+shape = SubResource("RectangleShape2D_vrxgl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="SegaGenesis-SonicTheHedgehog2-Stages-EmeraldHillZoneAct1" type="Sprite2D" parent="StaticBody2D"]
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(4095, -50)
+texture = ExtResource("2_0m7e5")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-1, 211, 8, 203, 28, 196, 79, 179, 143, 161, 206, 147, 234, 138, 249, 134, 272, 137, 296, 145, 332, 157, 353, 163, 370, 166, 383, 166, 383, 245, 143, 246, 143, 278, 383, 278, 383, 454, 366, 453, -1, 368)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(511, 166, 536, 165, 565, 155, 606, 141, 639, 134, 673, 136, 703, 139, 703, 230, 687, 230, 687, 238, 655, 238, 655, 246, 639, 246, 639, 278, 575, 278, 575, 262, 511, 262)
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(831, 106, 842, 102, 866, 102, 878, 101, 883, 97, 887, 96, 893, 98, 901, 102, 916, 106, 945, 115, 976, 121, 994, 124, 1009, 131, 1021, 134, 1037, 136, 1042, 138, 1047, 140, 1051, 150, 1057, 160, 1069, 173, 1083, 184, 1094, 190, 1108, 195, 1145, 199, 1163, 202, 1181, 197, 1191, 191, 1202, 188, 1217, 185, 1231, 180, 1244, 173, 1265, 169, 1284, 164, 1301, 166, 1319, 163, 1330, 166, 1343, 166, 1343, 454, 1231, 454, 1231, 438, 1199, 438, 1199, 422, 1151, 422, 1151, 391, 1103, 391, 1103, 374, 1071, 374, 1071, 358, 1023, 358, 1023, 326, 991, 326, 991, 318, 959, 318, 959, 310, 927, 310, 927, 302, 911, 302, 911, 294, 895, 294, 895, 246, 879, 246, 879, 238, 847, 238, 847, 230, 831, 230)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(383, 329, 402, 330, 410, 332, 436, 340, 453, 343, 469, 347, 507, 358, 527, 357, 556, 361, 578, 361, 644, 358, 699, 373, 756, 386, 784, 397, 811, 411, 843, 426, 879, 447, 928, 473, 958, 484, 1024, 517, 1078, 521, 1109, 520, 1135, 517, 1170, 518, 1206, 521, 1237, 520, 1266, 517, 1283, 518, 1298, 521, 1316, 521, 1332, 517, 1343, 519, 1343, 590, 383, 590)
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1535, 83, 1541, 77, 1549, 73, 1601, 73, 1790, 73, 1810, 74, 1840, 83, 1898, 98, 1953, 109, 1974, 117, 2004, 123, 2038, 133, 2071, 140, 2109, 150, 2142, 157, 2163, 164, 2181, 165, 2197, 164, 2207, 162, 2216, 158, 2228, 152, 2239, 143, 2255, 125, 2261, 114, 2266, 103, 2269, 88, 2271, 70, 2271, 10, 2282, 6, 2293, 6, 2306, 5, 2413, 62, 2440, 75, 2465, 89, 2485, 95, 2559, 131, 2659, 133, 2697, 133, 2711, 131, 2728, 125, 2739, 120, 2752, 110, 2761, 100, 2772, 85, 2783, 48, 2779, 27, 2771, 5, 2761, -8, 2746, -22, 2732, -31, 2719, -37, 2702, -40, 2687, -41, 2695, -55, 2765, -53, 2799, -42, 2815, -42, 2815, 102, 2799, 102, 2799, 118, 2783, 118, 2783, 134, 2767, 134, 2767, 150, 2751, 150, 2751, 310, 2719, 310, 2719, 318, 2703, 318, 2703, 326, 2559, 326, 2559, 318, 2543, 318, 2543, 310, 2527, 310, 2527, 302, 2511, 302, 2511, 294, 2495, 294, 2495, 190, 2463, 190, 2463, 182, 2431, 182, 2431, 230, 2415, 230, 2415, 238, 2383, 238, 2383, 246, 2351, 246, 2351, 254, 2319, 254, 2319, 262, 2287, 262, 2287, 254, 2238.97, 254, 2239, 246, 2223, 246, 2223, 238, 2191, 238, 2191, 230, 2159, 230, 2159, 238, 2127, 238, 2127, 246, 2095, 246, 2095, 254, 2063, 254, 2063, 262, 2047, 262, 2047, 230, 2031, 230, 2031, 238, 1999, 238, 1999, 246, 1967, 246, 1967, 254, 1935, 254, 1935, 262, 1919, 262, 1919, 422, 1855, 422, 1855, 438, 1791, 438, 1791, 198, 1631, 198, 1631, 182, 1551, 182, 1551, 166, 1535, 166)
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(1791, 522, 1795, 519, 1803, 518, 1858, 521, 1878, 521, 1901, 518, 1930, 517, 1942, 516, 1954, 512, 1968, 506, 1979, 498, 1990, 488, 1998, 478, 2007, 460, 2015, 457, 2055, 459, 2118, 457, 2167, 458, 2199, 455, 2218, 446, 2250, 438, 2270, 429, 2303, 420, 2331, 427, 2351.2, 436.409, 2382, 445, 2399, 453, 2431, 457, 2452, 455, 2464, 452, 2490, 443, 2509, 438, 2539, 426, 2559, 421, 2588, 429, 2610.06, 438.182, 2640, 446, 2658, 454, 2674, 458, 2691, 460, 2704, 465, 2720, 473, 2744, 482, 2784, 502, 2803, 512, 2822, 518, 2840, 516, 2852, 512, 2862, 507, 2872, 501, 2883, 491, 2892, 481, 2900, 470, 2905, 459, 2943, 458, 2943, 582, 2780.2, 582.052, 2559, 582.123, 2452.79, 582.106, 2134.09, 582.055, 2001.42, 582.034, 1893.67, 582.016, 1791, 582)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1439, 344.5)
+shape = SubResource("RectangleShape2D_5pain")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1439, 552)
+shape = SubResource("RectangleShape2D_bb3rx")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1567, 551.5)
+shape = SubResource("RectangleShape2D_hu3mw")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1695, 551.5)
+shape = SubResource("RectangleShape2D_1puxt")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1567, 374)
+shape = SubResource("RectangleShape2D_7tgo6")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1695, 374)
+shape = SubResource("RectangleShape2D_rlquc")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D3"]
+position = Vector2(2, 0)
+polygon = PackedVector2Array(1377, 33, 1413, 16, 1457, 27, 1474, 65, 1453, 107, 1406, 115, 1370, 100, 1361, 60)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+polygon = PackedVector2Array(1415, 16, 1459, 27, 1476, 65, 1455, 107, 1408, 115, 1372, 100, 1363, 60, 1379, 33)

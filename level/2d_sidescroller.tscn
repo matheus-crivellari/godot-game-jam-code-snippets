@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=4 uid="uid://brqn8rgkagluu"]
+[gd_scene load_steps=5 format=4 uid="uid://brqn8rgkagluu"]
 
 [ext_resource type="Texture2D" uid="uid://e3le74wwkycm" path="res://kenney_pixel-platformer/Tilemap/tilemap_packed.png" id="1_jrlwx"]
 [ext_resource type="PackedScene" uid="uid://c2mvclrudvpym" path="res://prefabs/character_body_2d.tscn" id="2_k4tf5"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_jrlwx"]
-viewport_path = NodePath("SubViewport")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jrlwx"]
 texture = ExtResource("1_jrlwx")
@@ -266,46 +263,22 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 2
 sources/1 = SubResource("TileSetAtlasSource_jrlwx")
 
-[node name="Node" type="Node"]
+[node name="Node2D" type="Node2D"]
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="Control"]
+[node name="Ground" type="TileMapLayer" parent="."]
 texture_filter = 1
 texture_repeat = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("ViewportTexture_jrlwx")
-expand_mode = 5
-
-[node name="SubViewport" type="SubViewport" parent="."]
-editor_description = "This node is not really necessary I just wanted tom make this scene more pixel perfect with a smaller resolution"
-size = Vector2i(320, 240)
-
-[node name="Node2D" type="Node2D" parent="SubViewport"]
-
-[node name="Ground" type="TileMapLayer" parent="SubViewport/Node2D"]
-texture_filter = 1
-texture_repeat = 1
+position = Vector2(0, 24)
 tile_map_data = PackedByteArray("AAAAAAoAAQACAAYAAAAAAAsAAQACAAYAAAABAAgAAQABAAYAAAABAAkAAQACAAEAAAABAAoAAQACAAYAAAABAAsAAQACAAYAAAACAAgAAQACAAYAAAACAAkAAQACAAEAAAACAAoAAQACAAYAAAACAAsAAQACAAYAAAADAAgAAQADAAYAAAADAAkAAQACAAEAAAADAAoAAQABAAEAAAADAAsAAQABAAYAAAAEAAoAAQADAAEAAAAEAAsAAQADAAYAAAAFAAoAAQACAAYAAAAFAAsAAQACAAYAAAAGAAoAAQACAAYAAAAGAAsAAQACAAYAAAAHAAoAAQACAAYAAAAHAAsAAQACAAYAAAAIAAkAAQACAAEAAAAIAAoAAQACAAYAAAAIAAsAAQACAAYAAAAJAAkAAQACAAEAAAAJAAoAAQACAAYAAAAJAAsAAQACAAYAAAAKAAkAAQACAAEAAAAKAAoAAQACAAYAAAAKAAsAAQACAAYAAAALAAoAAQACAAYAAAALAAsAAQACAAYAAAAMAAoAAQADAAYAAAAMAAsAAQADAAYAAAANAAsAAQACAAEAAAAOAAsAAQACAAEAAAAPAAoAAQABAAYAAAAPAAsAAQABAAYAAAAQAAoAAQACAAYAAAAQAAsAAQACAAYAAAARAAoAAQACAAYAAAARAAsAAQACAAYAAAAAAAkAAQACAAEAAAAEAAkAAQACAAEAAAAFAAkAAQACAAEAAAAGAAkAAQACAAEAAAAHAAkAAQACAAEAAAAIAAgAAQABAAEAAAAJAAgAAQACAAEAAAAKAAgAAQADAAEAAAALAAkAAQACAAEAAAAMAAkAAQADAAEAAAAPAAkAAQABAAEAAAAQAAkAAQACAAEAAAARAAkAAQACAAEAAAAAAAgAAQAFAAYAAAAGAAgAAQAEAAYAAAALAAgAAQAEAAYAAAABAAYAAQABAAEAAAACAAYAAQACAAEAAAADAAYAAQADAAEAAAABAAcAAQABAAYAAAACAAcAAQACAAYAAAADAAcAAQADAAYAAAA=")
 tile_set = SubResource("TileSet_k4tf5")
 
-[node name="Foreground" type="TileMapLayer" parent="SubViewport/Node2D"]
+[node name="Foreground" type="TileMapLayer" parent="."]
 texture_filter = 1
 texture_repeat = 1
+position = Vector2(0, 24)
 tile_map_data = PackedByteArray("AAAEAAkAAQAHAAYAAAA=")
 tile_set = SubResource("TileSet_k4tf5")
 collision_enabled = false
 
-[node name="CharacterBody2D" parent="SubViewport/Node2D" instance=ExtResource("2_k4tf5")]
+[node name="CharacterSidescroller2D" parent="." instance=ExtResource("2_k4tf5")]
 position = Vector2(46, 80)
