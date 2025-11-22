@@ -1,8 +1,28 @@
-[gd_scene load_steps=51 format=3 uid="uid://thv1j68k7036"]
+[gd_scene load_steps=59 format=3 uid="uid://thv1j68k7036"]
 
+[ext_resource type="Script" uid="uid://ph847jssd1k0" path="res://scripts/character_sidescroller_2d_sonic_like.gd" id="1_evsqk"]
+[ext_resource type="Script" uid="uid://b1x01d386kfv8" path="res://scripts/levels/2d_sidescroller_sonic_like.gd" id="1_pjl4s"]
 [ext_resource type="Texture2D" uid="uid://cp52pjvegg5ut" path="res://textures/PC _ Computer - Sonic Mania - Playable Characters - Sonic the Hedgehog.png" id="1_qn7uj"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_evsqk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wb656"]
+atlas = ExtResource("1_qn7uj")
+region = Rect2(736, 330, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg2m0"]
+atlas = ExtResource("1_qn7uj")
+region = Rect2(981, 330, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkdwc"]
+atlas = ExtResource("1_qn7uj")
+region = Rect2(1030, 330, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8tv2"]
+atlas = ExtResource("1_qn7uj")
+region = Rect2(1079, 330, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51ot2"]
+atlas = ExtResource("1_qn7uj")
+region = Rect2(1128, 330, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pjl4s"]
 atlas = ExtResource("1_qn7uj")
@@ -196,6 +216,26 @@ region = Rect2(834, 142, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_wb656")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg2m0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkdwc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8tv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51ot2")
+}],
+"loop": true,
+"name": &"break",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_pjl4s")
 }],
 "loop": true,
@@ -361,17 +401,62 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_evsqk"]
+radius = 9.5
+height = 39.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_pjl4s"]
+font_size = 8
+
+[node name="Game" type="Node2D" node_paths=PackedStringArray("charater")]
+script = ExtResource("1_pjl4s")
+charater = NodePath("CharacterBody2D")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CapsuleShape2D_evsqk")
+position = Vector2(174, 121)
+script = ExtResource("1_evsqk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
 texture_filter = 1
 texture_repeat = 1
 sprite_frames = SubResource("SpriteFrames_tghd4")
-animation = &"jump"
-frame = 12
-frame_progress = 0.562471
+animation = &"break"
+autoplay = "idle"
+speed_scale = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 4)
+shape = SubResource("CapsuleShape2D_evsqk")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GroundSpeed" type="Label" parent="Control"]
+layout_mode = 1
+offset_left = 11.0
+offset_top = 10.0
+offset_right = 69.0
+offset_bottom = 33.0
+text = "Ground Speed:"
+label_settings = SubResource("LabelSettings_pjl4s")
+
+[node name="Axis" type="Label" parent="Control"]
+layout_mode = 1
+offset_left = 11.0
+offset_top = 22.0
+offset_right = 69.0
+offset_bottom = 45.0
+text = "Axis:"
+label_settings = SubResource("LabelSettings_pjl4s")
+
+[node name="LastDir" type="Label" parent="Control"]
+layout_mode = 1
+offset_left = 11.0
+offset_top = 32.0
+offset_right = 69.0
+offset_bottom = 55.0
+text = "Last Dir: "
+label_settings = SubResource("LabelSettings_pjl4s")
