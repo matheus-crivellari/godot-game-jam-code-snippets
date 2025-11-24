@@ -1,8 +1,15 @@
-[gd_scene load_steps=59 format=3 uid="uid://thv1j68k7036"]
+[gd_scene load_steps=62 format=3 uid="uid://thv1j68k7036"]
 
 [ext_resource type="Script" uid="uid://ph847jssd1k0" path="res://scripts/character_sidescroller_2d_sonic_like.gd" id="1_evsqk"]
 [ext_resource type="Script" uid="uid://b1x01d386kfv8" path="res://scripts/levels/2d_sidescroller_sonic_like.gd" id="1_pjl4s"]
 [ext_resource type="Texture2D" uid="uid://cp52pjvegg5ut" path="res://textures/PC _ Computer - Sonic Mania - Playable Characters - Sonic the Hedgehog.png" id="1_qn7uj"]
+[ext_resource type="Texture2D" uid="uid://0l6w5jm8j40" path="res://textures/Scene1-FG Low.png" id="2_qcxrj"]
+[ext_resource type="Shader" uid="uid://dnkdsmfdy7mjd" path="res://shaders/new_shader.gdshader" id="3_t5s3f"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qcxrj"]
+shader = ExtResource("3_t5s3f")
+shader_parameter/target_color = Color(0, 0.941176, 0, 1)
+shader_parameter/tolerance = 0.05
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wb656"]
 atlas = ExtResource("1_qn7uj")
@@ -412,29 +419,62 @@ font_size = 8
 script = ExtResource("1_pjl4s")
 charater = NodePath("CharacterBody2D")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_mask = 2
+
+[node name="Scene1-fgLow" type="Sprite2D" parent="StaticBody2D"]
+modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+texture_repeat = 1
+position = Vector2(6655, 293)
+texture = ExtResource("2_qcxrj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-257, 169, -251, 164, -226, 168, -207, 171, -199, 172, -188, 172, -145, 165, -130, 165, -102, 168, -62, 172, -40, 172, -20, 170, -4, 165, 49, 165, 72, 173, 107, 180, 144, 197, 173, 212, 199, 221, 229, 227, 259, 230, 299, 228, 317, 224, 327, 219, 339, 211, 346, 204, 352, 197, 356, 191, 359, 186, 362, 180, 364, 172, 365, 165, 388, 165, 416, 169, 428, 168, 447, 165, 525, 165, 527, 172, 527, 181, 591, 181, 591, 169, 598, 165, 639, 165, 639, 137, 646, 132, 703, 133, 703, 105, 706, 101, 711, 100, 831, 101, 831, 57, 838, 54, 847, 53, 861, 53, 878, 51, 904.579, 53, 941, 53, 956, 51, 975, 49, 996, 51, 1017, 54, 1028, 54, 1039, 54, 1055, 51, 1081, 53, 1086, 58, 1087, 64, 1087, 102, 1087, 140, 1070, 140, 1070, 84, 848, 84, 848, 132, 723, 132, 723, 169, 655, 169, 655, 195, 610, 195, 609, 209, 510, 208, 510, 195, 391, 195, 391, 257, 196, 257, 95, 207, 34, 194, -12, 198, -40, 204, -132, 195, -170, 201, -207, 203, -239, 198, -239, 337, -257, 337)
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-position = Vector2(174, 121)
+z_index = 99
+position = Vector2(-231, 134)
+collision_layer = 2
 script = ExtResource("1_evsqk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
+material = SubResource("ShaderMaterial_qcxrj")
+position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_tghd4")
-animation = &"break"
+animation = &"idle"
 autoplay = "idle"
 speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(0, 4)
+z_as_relative = false
 shape = SubResource("CapsuleShape2D_evsqk")
 
-[node name="Control" type="Control" parent="."]
+[node name="SensorA" type="RayCast2D" parent="CharacterBody2D"]
+z_as_relative = false
+position = Vector2(-8.5, 0)
+target_position = Vector2(0, 36)
+
+[node name="SensorB" type="RayCast2D" parent="CharacterBody2D"]
+z_as_relative = false
+position = Vector2(8.5, 0)
+target_position = Vector2(0, 36)
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+z_as_relative = false
+
+[node name="Control" type="Control" parent="CharacterBody2D/Camera2D"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -151.0
+offset_top = -110.0
+offset_right = -111.0
+offset_bottom = -70.0
 
-[node name="GroundSpeed" type="Label" parent="Control"]
+[node name="GroundSpeed" type="Label" parent="CharacterBody2D/Camera2D/Control"]
 layout_mode = 1
 offset_left = 11.0
 offset_top = 10.0
@@ -443,7 +483,7 @@ offset_bottom = 33.0
 text = "Ground Speed:"
 label_settings = SubResource("LabelSettings_pjl4s")
 
-[node name="Axis" type="Label" parent="Control"]
+[node name="Axis" type="Label" parent="CharacterBody2D/Camera2D/Control"]
 layout_mode = 1
 offset_left = 11.0
 offset_top = 22.0
@@ -452,7 +492,7 @@ offset_bottom = 45.0
 text = "Axis:"
 label_settings = SubResource("LabelSettings_pjl4s")
 
-[node name="LastDir" type="Label" parent="Control"]
+[node name="LastDir" type="Label" parent="CharacterBody2D/Camera2D/Control"]
 layout_mode = 1
 offset_left = 11.0
 offset_top = 32.0
