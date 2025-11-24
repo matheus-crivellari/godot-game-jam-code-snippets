@@ -17,25 +17,49 @@ const CONSTANT_MULTIPLIER = 60.0
 ## displays debug lines in viewport
 @export var debug_lines: bool = true
 
-@onready var animated_sprite := $AnimatedSprite2D
-@onready var sensor_a := $SensorA
-@onready var sensor_b := $SensorB
+@onready var animated_sprite_pivot := $Marker2D
+@onready var animated_sprite := $Marker2D/AnimatedSprite2D
+@onready var sensor_pivot := $Node2D
+@onready var sensor_a := $Node2D/SensorA
+@onready var sensor_b := $Node2D/SensorB
 
 var ground_speed: float = 0.0
 
 var _last_dir := 1.0
 var _is_breaking := false
+var _ground_vector := Vector2.ZERO
+## ground angle in radians
+var _ground_angle := 0.0
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready() -> void:
+  floor_stop_on_slope = false
+  floor_constant_speed = true
+  floor_block_on_wall = false
+  floor_max_angle = 75.0
+  floor_snap_length = 128.0
+
+
 func _physics_process(_delta) -> void:
+  _ground_vector = find_ground_vector()
+  _ground_angle = _ground_vector.angle()
+  
   ground_speed = calculate_ground_speed()
+  
   velocity.x = ground_speed
+  velocity = velocity.rotated(_ground_angle)
+  up_direction = _ground_vector.normalized().rotated(deg_to_rad(-90))
   
   move_and_slide()
   
+  velocity = velocity.rotated(-_ground_angle)
+  
+  apply_floor_snap()
+  
+  rotate_sensors()
   flip_sprite()
   animate()
+  rotate_sprite()
   
   queue_redraw()
 
@@ -49,16 +73,15 @@ func _draw() -> void:
   
   draw_line(from, to, Color.RED, 1.0)
   
-  if sensor_a.is_colliding() and sensor_b.is_colliding():
+  if sensor_a.is_colliding():
     var point_a: Vector2 = to_local(sensor_a.get_collision_point())
-    var point_b: Vector2 = to_local(sensor_b.get_collision_point())
-    var ground_vector: Vector2 = point_b - point_a
-    
-    draw_line(point_a, point_a + ground_vector, Color.YELLOW, 1.0)
-    
-    var normal_vector  = ground_vector.rotated(deg_to_rad(-90))
-    var offset = ground_vector / 2
-    
+    var local_ground_vector = _ground_vector
+
+    draw_line(point_a, point_a + local_ground_vector, Color.YELLOW, 1.0)
+
+    var normal_vector  = local_ground_vector.rotated(deg_to_rad(-90))
+    var offset = local_ground_vector / 2
+
     draw_line(point_a + offset, point_a + offset + normal_vector, Color.MAGENTA, 1.0)
 
 
@@ -83,6 +106,34 @@ func animate() -> void:
       animated_sprite.animation = "run"
   else:
     animated_sprite.animation = "idle"
+
+
+func rotate_sprite() -> void:
+  animated_sprite_pivot.rotation = _ground_angle
+
+
+func rotate_sensors() -> void:
+  var deg_ground_angle = rad_to_deg(_ground_angle)
+  
+  if deg_ground_angle < -45 and deg_ground_angle >= -134:
+    sensor_pivot.rotation_degrees = -90.0
+  elif deg_ground_angle < -134 and deg_ground_angle >= -225:
+    sensor_pivot.rotation_degrees = -180.0
+  elif deg_ground_angle < -225 and deg_ground_angle >= -314:
+    sensor_pivot.rotation_degrees = -270.0
+  else:
+    sensor_pivot.rotation_degrees = 0.0
+
+
+func find_ground_vector() -> Vector2:
+  if sensor_a.is_colliding() and sensor_b.is_colliding():
+    var point_a: Vector2 = sensor_a.get_collision_point()
+    var point_b: Vector2 = sensor_b.get_collision_point()
+    var ground_vector: Vector2 = point_b - point_a
+
+    return ground_vector
+
+  return _ground_vector
 
 
 ## Handles acceleration and breaking by player 
@@ -111,3 +162,9 @@ func calculate_ground_speed() -> float:
     _last_dir = axis
   
   return calculated_ground_speed * _last_dir
+
+
+func _unhandled_key_input(event: InputEvent) -> void:
+  if event is InputEventKey:
+    if event.keycode == KEY_R:
+      get_tree().reload_current_scene()

@@ -434,11 +434,15 @@ polygon = PackedVector2Array(-257, 169, -251, 164, -226, 168, -207, 171, -199, 1
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 z_index = 99
-position = Vector2(-231, 134)
+position = Vector2(-234, 157)
 collision_layer = 2
 script = ExtResource("1_evsqk")
+debug_lines = false
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+[node name="Marker2D" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, -10)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D/Marker2D"]
 z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
@@ -451,20 +455,24 @@ speed_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 z_as_relative = false
+position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_evsqk")
 
-[node name="SensorA" type="RayCast2D" parent="CharacterBody2D"]
+[node name="Node2D" type="Node2D" parent="CharacterBody2D"]
+
+[node name="SensorA" type="RayCast2D" parent="CharacterBody2D/Node2D"]
 z_as_relative = false
-position = Vector2(-8.5, 0)
+position = Vector2(-8.5, -10)
 target_position = Vector2(0, 36)
 
-[node name="SensorB" type="RayCast2D" parent="CharacterBody2D"]
+[node name="SensorB" type="RayCast2D" parent="CharacterBody2D/Node2D"]
 z_as_relative = false
-position = Vector2(8.5, 0)
+position = Vector2(8.5, -10)
 target_position = Vector2(0, 36)
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 z_as_relative = false
+position = Vector2(0, -10)
 
 [node name="Control" type="Control" parent="CharacterBody2D/Camera2D"]
 layout_mode = 3

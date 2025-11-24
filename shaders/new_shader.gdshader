@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 // color to be removed
-uniform vec4 target_color : source_color = vec4(1.0, 0.0, 1.0, 1.0); 
+uniform vec4 target_color : source_color = vec4(1.0, 0.0, 1.0, 1.0);
 // color difference tolerance
 uniform float tolerance : hint_range(0.0, 1.0) = 0.05;
 
