@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://thv1j68k7036"]
+[gd_scene load_steps=63 format=3 uid="uid://thv1j68k7036"]
 
 [ext_resource type="Script" uid="uid://ph847jssd1k0" path="res://scripts/character_sidescroller_2d_sonic_like.gd" id="1_evsqk"]
 [ext_resource type="Script" uid="uid://b1x01d386kfv8" path="res://scripts/levels/2d_sidescroller_sonic_like.gd" id="1_pjl4s"]
@@ -408,6 +408,9 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_qcxrj"]
+radius = 9.5
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_evsqk"]
 radius = 9.5
 height = 39.0
@@ -432,31 +435,42 @@ texture = ExtResource("2_qcxrj")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(-257, 169, -251, 164, -226, 168, -207, 171, -199, 172, -188, 172, -145, 165, -130, 165, -102, 168, -62, 172, -40, 172, -20, 170, -4, 165, 49, 165, 72, 173, 107, 180, 144, 197, 173, 212, 199, 221, 229, 227, 259, 230, 299, 228, 317, 224, 327, 219, 339, 211, 346, 204, 352, 197, 356, 191, 359, 186, 362, 180, 364, 172, 365, 165, 388, 165, 416, 169, 428, 168, 447, 165, 525, 165, 527, 172, 527, 181, 591, 181, 591, 169, 598, 165, 639, 165, 639, 137, 646, 132, 703, 133, 703, 105, 706, 101, 711, 100, 831, 101, 831, 57, 838, 54, 847, 53, 861, 53, 878, 51, 904.579, 53, 941, 53, 956, 51, 975, 49, 996, 51, 1017, 54, 1028, 54, 1039, 54, 1055, 51, 1081, 53, 1086, 58, 1087, 64, 1087, 102, 1087, 140, 1070, 140, 1070, 84, 848, 84, 848, 132, 723, 132, 723, 169, 655, 169, 655, 195, 610, 195, 609, 209, 510, 208, 510, 195, 391, 195, 391, 257, 196, 257, 95, 207, 34, 194, -12, 198, -40, 204, -132, 195, -170, 201, -207, 203, -239, 198, -239, 337, -257, 337)
 
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D2"]
+position = Vector2(512, 79)
+polygon = PackedVector2Array(969, 1753, 878, 1775, 812, 1812, 754, 1857, 719, 1916, 686, 1995, 670, 2059, 663, 2143, 666, 2213, 683, 2299, 751, 2412, 833, 2494, 933, 2563, 1079, 2604, 1237, 2611, 1329, 2586, 1408, 2537, 1474, 2479, 1521, 2403, 1530, 2375, 1536.06, 2337.57, 1534, 2316, 1526, 2296, 1511, 2283, 1498, 2278, 1483.38, 2277, 1271.2, 2277, 1250, 2270, 1238.93, 2251.62, 1240.05, 2221.09, 1248, 2202, 1266.96, 2194.97, 1502.63, 2194.74, 1527, 2192, 1544, 2178, 1554, 2157, 1553, 2125, 1536, 2054, 1502, 1983, 1442, 1888, 1339, 1810, 1216, 1764, 1094, 1751, 969, 1753, 969, 1624, 1792, 1627, 1793, 2778, 447, 2786, 455, 1624, 969, 1624)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D2"]
+polygon = PackedVector2Array(1592, 1830, 1729, 1843, 1850, 1888, 1954, 1967, 2015, 2065, 2048, 2134, 2065, 2209, 2066, 2234, 2056, 2257, 2039, 2271, 2013, 2274, 1779, 2274, 1760, 2281, 1752, 2300, 1751, 2331, 1762, 2349, 1784, 2356, 1995, 2356, 2010, 2357, 2023, 2362, 2038, 2375, 2046, 2395, 2048, 2417, 2042, 2454, 2033, 2482, 1986, 2558, 1919, 2617, 1840, 2665, 1748, 2690, 1592, 2683, 1445, 2642, 1346, 2574, 1262, 2491, 1196, 2378, 1178, 2292, 1175, 2221, 1183, 2137, 1198, 2073, 1230, 1997, 1267, 1936, 1323, 1891, 1392, 1853, 1483, 1832, 1592, 1830, 1591, 1703, 966, 1706, 963, 2862, 2306, 2857, 2302, 1705, 1591, 1703)
+
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 z_index = 99
-position = Vector2(-234, 157)
+position = Vector2(1643, 2675)
 collision_layer = 2
 script = ExtResource("1_evsqk")
-debug_lines = false
 
 [node name="Marker2D" type="Node2D" parent="CharacterBody2D"]
-position = Vector2(0, -10)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D/Marker2D"]
 z_as_relative = false
 texture_filter = 1
 texture_repeat = 1
 material = SubResource("ShaderMaterial_qcxrj")
-position = Vector2(0, -4)
+position = Vector2(0, -14)
 sprite_frames = SubResource("SpriteFrames_tghd4")
 animation = &"idle"
 autoplay = "idle"
 speed_scale = 1.5
 
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_qcxrj")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 z_as_relative = false
 position = Vector2(0, -10)
 shape = SubResource("CapsuleShape2D_evsqk")
+disabled = true
 
 [node name="Node2D" type="Node2D" parent="CharacterBody2D"]
 

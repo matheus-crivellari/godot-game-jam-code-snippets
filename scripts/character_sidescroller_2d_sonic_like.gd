@@ -44,35 +44,38 @@ func _physics_process(_delta) -> void:
   _ground_vector = find_ground_vector()
   _ground_angle = _ground_vector.angle()
   
-  ground_speed = calculate_ground_speed()
+  print(rad_to_deg(_ground_angle))
   
+
+  ground_speed = calculate_ground_speed()
+
   velocity.x = ground_speed
   velocity = velocity.rotated(_ground_angle)
   up_direction = _ground_vector.normalized().rotated(deg_to_rad(-90))
-  
+
   move_and_slide()
-  
+
   velocity = velocity.rotated(-_ground_angle)
-  
+
   apply_floor_snap()
-  
+
   rotate_sensors()
   flip_sprite()
   animate()
   rotate_sprite()
-  
+
   queue_redraw()
 
 
 func _draw() -> void:
   if not debug_lines:
     return
-    
+
   var from := Vector2(0.0, 26.0)
   var to := Vector2(ground_speed / CONSTANT_MULTIPLIER, 26.0)
-  
+
   draw_line(from, to, Color.RED, 1.0)
-  
+
   if sensor_a.is_colliding():
     var point_a: Vector2 = to_local(sensor_a.get_collision_point())
     var local_ground_vector = _ground_vector
@@ -113,14 +116,14 @@ func rotate_sprite() -> void:
 
 
 func rotate_sensors() -> void:
-  var deg_ground_angle = rad_to_deg(_ground_angle)
-  
-  if deg_ground_angle < -45 and deg_ground_angle >= -134:
+  if _ground_angle < deg_to_rad(-45) and _ground_angle >= deg_to_rad(-134):
     sensor_pivot.rotation_degrees = -90.0
-  elif deg_ground_angle < -134 and deg_ground_angle >= -225:
-    sensor_pivot.rotation_degrees = -180.0
-  elif deg_ground_angle < -225 and deg_ground_angle >= -314:
+  elif (_ground_angle < deg_to_rad(-134) and _ground_angle >= deg_to_rad(-181)) or (_ground_angle <= deg_to_rad(181) and _ground_angle >= deg_to_rad(134)):
+    sensor_pivot.rotation_degrees = -181.0
+  elif _ground_angle < deg_to_rad(134) and _ground_angle >= deg_to_rad(45):
     sensor_pivot.rotation_degrees = -270.0
+  elif (_ground_angle < deg_to_rad(45) and _ground_angle >= deg_to_rad(0)) or (_ground_angle < deg_to_rad(0) and _ground_angle >= deg_to_rad(-45)):
+    sensor_pivot.rotation_degrees = 0.0
   else:
     sensor_pivot.rotation_degrees = 0.0
 
